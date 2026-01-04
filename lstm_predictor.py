@@ -2,13 +2,13 @@
 LSTM Model for Stock/Crypto Price Prediction
 Implements an LSTM neural network for time series prediction
 """
+import os
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
-from tensorflow.keras.models import Sequential
+from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import LSTM, Dense, Dropout
 from tensorflow.keras.callbacks import EarlyStopping
-import os
 
 
 class LSTMPredictor:
@@ -216,8 +216,6 @@ class LSTMPredictor:
         Args:
             filepath (str): Path to model file
         """
-        from tensorflow.keras.models import load_model
-        
         if os.path.exists(filepath):
             self.model = load_model(filepath)
             print(f"Model loaded from {filepath}")

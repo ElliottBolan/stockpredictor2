@@ -25,6 +25,10 @@ class NewsFetcher:
         self.base_url = "https://newsapi.org/v2/everything"
         self.top_headlines_url = "https://newsapi.org/v2/top-headlines"
     
+    def _is_api_key_valid(self):
+        """Check if API key is valid"""
+        return self.api_key and self.api_key != 'your_newsapi_key_here'
+    
     def fetch_symbol_news(self, symbol, company_name=None, max_results=5):
         """
         Fetch news for a specific stock or cryptocurrency
@@ -37,7 +41,7 @@ class NewsFetcher:
         Returns:
             list: List of news articles
         """
-        if not self.api_key or self.api_key == 'your_newsapi_key_here':
+        if not self._is_api_key_valid():
             print("Warning: No valid NewsAPI key found. Please set NEWS_API_KEY in .env file")
             return self._get_mock_news(symbol, company_name)
         
@@ -84,7 +88,7 @@ class NewsFetcher:
         Returns:
             list: List of news articles
         """
-        if not self.api_key or self.api_key == 'your_newsapi_key_here':
+        if not self._is_api_key_valid():
             print("Warning: No valid NewsAPI key found. Please set NEWS_API_KEY in .env file")
             return self._get_mock_general_news()
         

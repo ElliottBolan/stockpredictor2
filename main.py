@@ -19,6 +19,19 @@ class StockCryptoPredictor:
         self.lstm_predictor = LSTMPredictor(sequence_length=60)
         self.news_fetcher = NewsFetcher()
     
+    def _format_date(self, date_string):
+        """Format date string safely"""
+        try:
+            return date_string[:10] if date_string and len(date_string) >= 10 else date_string
+        except (TypeError, AttributeError):
+            return 'N/A'
+    
+    def _truncate_description(self, description, max_length=150):
+        """Truncate description to max length"""
+        if not description:
+            return ''
+        return description[:max_length] + "..." if len(description) > max_length else description
+    
     def run(self, symbol=None):
         """
         Run the predictor application
@@ -114,10 +127,9 @@ class StockCryptoPredictor:
         if news_articles:
             for i, article in enumerate(news_articles, 1):
                 print(f"\n{i}. {article['title']}")
-                print(f"   Source: {article['source']} | Published: {article['published_at'][:10]}")
+                print(f"   Source: {article['source']} | Published: {self._format_date(article['published_at'])}")
                 if article['description']:
-                    desc = article['description'][:150] + "..." if len(article['description']) > 150 else article['description']
-                    print(f"   {desc}")
+                    print(f"   {self._truncate_description(article['description'])}")
                 print(f"   URL: {article['url']}")
         else:
             print("No news articles found.")
@@ -137,10 +149,9 @@ class StockCryptoPredictor:
         if news_articles:
             for i, article in enumerate(news_articles, 1):
                 print(f"\n{i}. {article['title']}")
-                print(f"   Source: {article['source']} | Published: {article['published_at'][:10]}")
+                print(f"   Source: {article['source']} | Published: {self._format_date(article['published_at'])}")
                 if article['description']:
-                    desc = article['description'][:150] + "..." if len(article['description']) > 150 else article['description']
-                    print(f"   {desc}")
+                    print(f"   {self._truncate_description(article['description'])}")
                 print(f"   URL: {article['url']}")
         else:
             print("No news articles found.")
