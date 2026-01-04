@@ -1,0 +1,26 @@
+# Environment
+.env
+venv/
+env/
+ENV/
+*.pyc
+__pycache__/
+
+# Model files
+models/
+*.h5
+*.keras
+
+# Data
+data/
+*.csv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
